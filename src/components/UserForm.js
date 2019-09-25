@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import EntryPoint from './EntryPoint';
 import FormGithubUsername from './FormGithubUsername';
+import Results from './Results';
 
 export class UserForm extends Component {
   state = {
@@ -54,22 +55,27 @@ export class UserForm extends Component {
 
     switch(step) {
       case 1:
-      return (
-        <EntryPoint
-          nextStep={this.nextStep}
-        />
-      )
+        return (
+          <EntryPoint
+            nextStep={this.nextStep}
+          />
+        )
       case 2:
-      return (
-        <FormGithubUsername
-          nextStep={this.nextStep}
-          prevStep={this.prevStep}
-          handleChange={this.handleChange}
-          values={values}
-        />
-      )
+        return (
+          <FormGithubUsername
+            nextStep={this.nextStep}
+            prevStep={this.prevStep}
+            handleChange={this.handleChange}
+            values={values}
+          />
+        )
       case 3:
-        return <h1>Results</h1>
+        return (
+          <Results
+            usernameEntryStep={this.usernameEntryStep}
+            values={values}
+          />
+        )
       case 4:
         return <h1>UnrecognisedUsername</h1>
     }
