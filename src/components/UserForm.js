@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import EntryPoint from './EntryPoint';
+import FormGithubUsername from './FormGithubUsername';
 
 export class UserForm extends Component {
   state = {
@@ -43,9 +44,7 @@ export class UserForm extends Component {
 
   // handle fields change
   handleChange = input => e => {
-    this.setState({
-      [input]: e.target.value
-    });
+    this.setState({[input]: e.target.value});
   }
 
   render() {
@@ -61,7 +60,14 @@ export class UserForm extends Component {
         />
       )
       case 2:
-        return <h1>FormGithubUsername</h1>
+      return (
+        <FormGithubUsername
+          nextStep={this.nextStep}
+          prevStep={this.prevStep}
+          handleChange={this.handleChange}
+          values={values}
+        />
+      )
       case 3:
         return <h1>Results</h1>
       case 4:

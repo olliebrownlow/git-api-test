@@ -13,11 +13,8 @@ export class EntryPoint extends Component {
   render() {
     return (
       <React.Fragment>
-        <header>
-          <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-        </header>
         <AppBar style={{ background: '#ff3399', padding: '12px' }} position="static">
-          <Typography variant="h6">
+          <Typography variant="h5">
             Discover someone's favourite programming language
           </Typography>
         </AppBar>
@@ -28,13 +25,23 @@ export class EntryPoint extends Component {
         <Button
           variant="contained"
           onClick={this.continue}
+          style={styles.button}
+          color="primary"
         >
           Continue
         </Button>
       </React.Fragment>
     );
   }
+}
 
+const styles = {
+  button: {
+    backgroundColor: '#ff3399',
+    color: '#ffffff',
+    margin: 15,
+    width: 150
+  }
 }
 
 export default EntryPoint;
