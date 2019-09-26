@@ -13,6 +13,7 @@ To use the program, follow the links and enter a valid Github username into the 
 For this I have used material-ui with just a few button and colour tweaks.
 
 ### Code design
+![github](./public/diagram.png)
 
 The interactive components are accessed through a wrapper component ("UserForm.js") which has a `step` counter which renders the correct 'page' depending on user input and button clicks.
 
@@ -51,3 +52,9 @@ I want to know how many of those repositories use their favourite language as th
 ### Unresolved edge case
 
 - I have not dealt with cases where more than one language is the most popular in the Github user's account. In this case only one language will be displayed.
+
+### Limitations
+
+The app only considers the first 100 repositories (alphabetically speaking). This is because the api is paginated. I have set it to return the max number per page (100), but have not built in a way to call all of the pages of a particular user and combine the results.
+
+The only way around this would be to send a request that returns information including how many pages (at 100 per page) there are for that particular user. All pages could then be called and a more accurate calculation of the user's favourite language could be implemented.

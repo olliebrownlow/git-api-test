@@ -6,7 +6,7 @@ import Results from './Results';
 import UnrecognisedUsername from './UnrecognisedUsername';
 
 const API_URL_START = 'https://api.github.com/users/';
-const API_URL_END = '/repos?per_page=1000';
+const API_URL_END = '/repos?per_page=100';
 
 export class UserForm extends Component {
   state = {
