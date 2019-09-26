@@ -10,7 +10,7 @@ export class Results extends Component {
 
   checkAnother = e => {
     e.preventDefault();
-    this.props.usernameEntryStep();
+    this.props.prevStep();
   }
 
   render() {
@@ -24,7 +24,7 @@ export class Results extends Component {
         </AppBar>
         <br/>
         <List>
-          <ListItem style={{  textAlign: "center"}}>
+          <ListItem style={{ textAlign: "center"}}>
             <ListItemText
               primary="Number of repos:"
               secondary={ values.numberOfRepos }

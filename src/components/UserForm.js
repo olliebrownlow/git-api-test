@@ -11,9 +11,9 @@ export class UserForm extends Component {
   state = {
       step: 1,
       username: "",
-      numberOfRepos: null,
       favouriteLanguage: null,
-      frequency: null
+      frequency: null,
+      numberOfRepos: null
   }
 
   // proceed to next step
@@ -39,60 +39,53 @@ export class UserForm extends Component {
     });
   }
 
-  // go to username entry page
-  usernameEntryStep = () => {
-    this.setState({
-      step: 2
-    });
-  }
-
-  // go to results page
-  resultsStep = () => {
-    this.setState({
-      step: 3
-    });
-  }
-
   // handle fields change
   handleChange = input => e => {
     this.setState({[input]: e.target.value});
   }
 
-  setRepos = () => {
+  getGithubData = () => {
     const url = `${API_URL_START}${this.state.username}${API_URL_END}`;
     axios.get(url)
     .then(response => response.data)
     .then((data) => {
-      this.setLanguageAndFrequency(data);
-      this.resultsStep();
+      this.setStateVariables(data);
+      this.nextStep();
     }).catch(error => {
       console.log('check login error', error);
     });
   }
 
-  setLanguageAndFrequency = (data) => {
+  setStateVariables = (data) => {
+    const language = this.calculateStateVariables(data)[0];
+    const frequency = this.calculateStateVariables(data)[1];
+    const totalRepos = this.calculateStateVariables(data)[2];
+    this.setState({
+      favouriteLanguage: language,
+      frequency: frequency,
+      numberOfRepos: totalRepos
+    });
+  }
+
+  calculateStateVariables = (data) => {
     const languagesArray = data.map((repo) => (
       repo.language
     ))
     var frequency = 1;
     var count = 0;
-    var item;
+    var language;
     for (var i = 0; i < languagesArray.length; i++) {
       for (var j = i; j < languagesArray.length; j++) {
         if (languagesArray[i] === languagesArray[j])
           count++;
         if (frequency < count) {
           frequency = count;
-          item = languagesArray[i];
+          language = languagesArray[i];
         }
       }
       count = 0;
     }
-    this.setState({
-      numberOfRepos: languagesArray.length,
-      favouriteLanguage: item,
-      frequency: frequency
-    });
+    return [language, frequency, languagesArray.length]
   }
 
   render() {
@@ -113,14 +106,14 @@ export class UserForm extends Component {
             nextStep={this.nextStep}
             prevStep={this.prevStep}
             handleChange={this.handleChange}
-            setRepos={this.setRepos}
+            getGithubData={this.getGithubData}
             values={values}
           />
         )
       case 3:
         return (
           <Results
-            usernameEntryStep={this.usernameEntryStep}
+            prevStep={this.prevStep}
             values={values}
           />
         )

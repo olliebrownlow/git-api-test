@@ -12,7 +12,7 @@ export class FormGithubUsername extends Component {
   }
 
   render() {
-    const { values, handleChange, setRepos } = this.props;
+    const { values, handleChange, getGithubData } = this.props;
     return (
       <React.Fragment>
         <AppBar style={{ background: '#ff3399', padding: '12px' }} position="static">
@@ -34,14 +34,14 @@ export class FormGithubUsername extends Component {
         <Button
           variant="contained"
           onClick={this.back}
-          style={styles.button}
+          style={styles.backButton}
         >
           Back
         </Button>
         <Button
           variant="contained"
           style={styles.button}
-          onClick={() => { setRepos(); }}
+          onClick={() => { getGithubData(); }}
         >
           Continue
         </Button>
@@ -54,6 +54,10 @@ const styles = {
   button: {
     backgroundColor: '#ff3399',
     color: '#ffffff',
+    margin: 15,
+    width: 150
+  },
+  backButton: {
     margin: 15,
     width: 150
   },

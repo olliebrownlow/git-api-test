@@ -20,7 +20,7 @@ export class EntryPoint extends Component {
         </AppBar>
         <br/>
         <h1>Ever wanted to know someone's favourite programming language?</h1>
-        <h2>Input a username and find out</h2>
+        <h2>Input a Github username and find out..</h2>
         <br/>
         <Button
           variant="contained"
