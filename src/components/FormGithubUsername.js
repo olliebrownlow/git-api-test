@@ -6,18 +6,13 @@ import TextField from '@material-ui/core/TextField';
 
 export class FormGithubUsername extends Component {
 
-  continue = e => {
-    e.preventDefault();
-    this.props.nextStep();
-  }
-
   back = e => {
     e.preventDefault();
     this.props.prevStep();
   }
 
   render() {
-    const { values, handleChange } = this.props;
+    const { values, handleChange, setRepos } = this.props;
     return (
       <React.Fragment>
         <AppBar style={{ background: '#ff3399', padding: '12px' }} position="static">
@@ -45,8 +40,8 @@ export class FormGithubUsername extends Component {
         </Button>
         <Button
           variant="contained"
-          onClick={this.continue}
           style={styles.button}
+          onClick={() => { setRepos(); }}
         >
           Continue
         </Button>

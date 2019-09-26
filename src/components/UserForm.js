@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
+import axios from 'axios'
 import EntryPoint from './EntryPoint';
 import FormGithubUsername from './FormGithubUsername';
 import Results from './Results';
+
+const API_URL_START = 'https://api.github.com/users/';
+const API_URL_END = '/repos?per_page=1000';
 
 export class UserForm extends Component {
   state = {
       step: 1,
       username: "",
-      repos: [],
-      languages: []
+      numberOfRepos: null,
+      favouriteLanguage: null,
+      frequency: null
   }
 
   // proceed to next step
@@ -29,17 +34,22 @@ export class UserForm extends Component {
 
   // go to unrecognised username page
   unrecognisedUsernameStep = () => {
-    const { step } = this.state;
     this.setState({
       step: 4
     });
   }
 
-  // go back to username entry page
+  // go to username entry page
   usernameEntryStep = () => {
-    const { step } = this.state;
     this.setState({
       step: 2
+    });
+  }
+
+  // go to results page
+  resultsStep = () => {
+    this.setState({
+      step: 3
     });
   }
 
@@ -48,10 +58,47 @@ export class UserForm extends Component {
     this.setState({[input]: e.target.value});
   }
 
+  setRepos = () => {
+    const url = `${API_URL_START}${this.state.username}${API_URL_END}`;
+    axios.get(url)
+    .then(response => response.data)
+    .then((data) => {
+      this.setLanguageAndFrequency(data);
+      this.resultsStep();
+    }).catch(error => {
+      console.log('check login error', error);
+    });
+  }
+
+  setLanguageAndFrequency = (data) => {
+    const languagesArray = data.map((repo) => (
+      repo.language
+    ))
+    var frequency = 1;
+    var count = 0;
+    var item;
+    for (var i = 0; i < languagesArray.length; i++) {
+      for (var j = i; j < languagesArray.length; j++) {
+        if (languagesArray[i] === languagesArray[j])
+          count++;
+        if (frequency < count) {
+          frequency = count;
+          item = languagesArray[i];
+        }
+      }
+      count = 0;
+    }
+    this.setState({
+      numberOfRepos: languagesArray.length,
+      favouriteLanguage: item,
+      frequency: frequency
+    });
+  }
+
   render() {
     const { step } = this.state;
-    const { username, repos, languages } = this.state;
-    const values = { username, repos, languages }
+    const { username, numberOfRepos, favouriteLanguage, frequency } = this.state;
+    const values = { username, numberOfRepos, favouriteLanguage, frequency }
 
     switch(step) {
       case 1:
@@ -66,6 +113,7 @@ export class UserForm extends Component {
             nextStep={this.nextStep}
             prevStep={this.prevStep}
             handleChange={this.handleChange}
+            setRepos={this.setRepos}
             values={values}
           />
         )
