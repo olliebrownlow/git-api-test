@@ -10,6 +10,8 @@ To use the program, follow the links and enter a valid Github username into the 
 
 ### Page design
 
+
+
 ### Code design
 
 The interactive components are accessed through a wrapper component ("UserForm.js") which has a `step` counter which renders the correct 'page' depending on user input and button clicks.
@@ -17,3 +19,11 @@ The interactive components are accessed through a wrapper component ("UserForm.j
 Requests to the [Github API](https://developer.github.com/v3/) are made using axios GET requests.
 
 ### Edge cases
+
+-  In the `setStateVariables` method in `UserForm`, when any of `language`, `frequency` or `totalRepos` are returned with falsey values (for example if someone's account contains only one repo with a document written in MD - the api returns `languages` as empty in this case), the variables are populated with the phrase 'insufficient data'.
+
+- If the Github username does not exist, the user `UnrecognisedUsername` component is rendered and the user has the chance to try again.
+
+### Unresolved edge case
+
+- I have not dealt with cases where more than one language is the most popular in the Github user's account. In this case only one language will be displayed.

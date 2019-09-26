@@ -26,21 +26,23 @@ export class Results extends Component {
         <List>
           <ListItem style={{ textAlign: "center"}}>
             <ListItemText
-              primary="Number of repos:"
-              secondary={ values.numberOfRepos }
+              primary={ values.numberOfRepos }
+              secondary="total number of repos"
             />
           </ListItem>
           <br/>
           <ListItem style={{  textAlign: "center"}}>
             <ListItemText
-              primary="Favourite language:"
-              secondary={ values.favouriteLanguage }
+              primary={ values.favouriteLanguage }
+              secondary="user's favourite language"
+
             />
           </ListItem>
           <br/>
           <ListItem style={{  textAlign: "center"}}>
             <ListItemText
-              primary={ "Used as the main language in " + values.frequency + " repos" }
+              primary={ values.frequency }
+              secondary={ "number of repos where the user's favourite language appears as the main language" }
             />
           </ListItem>
         </List>

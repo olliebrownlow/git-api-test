@@ -52,6 +52,7 @@ export class UserForm extends Component {
       this.setStateVariables(data);
       this.nextStep();
     }).catch(error => {
+      this.unrecognisedUsernameStep();
       console.log('check login error', error);
     });
   }
@@ -60,11 +61,20 @@ export class UserForm extends Component {
     const language = this.calculateStateVariables(data)[0];
     const frequency = this.calculateStateVariables(data)[1];
     const totalRepos = this.calculateStateVariables(data)[2];
-    this.setState({
-      favouriteLanguage: language,
-      frequency: frequency,
-      numberOfRepos: totalRepos
-    });
+    if (language && frequency && totalRepos) {
+      this.setState({
+        favouriteLanguage: language.toUpperCase(),
+        frequency: frequency,
+        numberOfRepos: totalRepos
+      });
+    } else {
+      console.log("ohno!");
+      this.setState({
+        favouriteLanguage: "insufficient data",
+        frequency: "insufficient data",
+        numberOfRepos: "insufficient data"
+      });
+    }
   }
 
   calculateStateVariables = (data) => {
