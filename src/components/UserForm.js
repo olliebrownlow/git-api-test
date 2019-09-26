@@ -3,6 +3,7 @@ import axios from 'axios'
 import EntryPoint from './EntryPoint';
 import FormGithubUsername from './FormGithubUsername';
 import Results from './Results';
+import UnrecognisedUsername from './UnrecognisedUsername';
 
 const API_URL_START = 'https://api.github.com/users/';
 const API_URL_END = '/repos?per_page=1000';
@@ -29,6 +30,13 @@ export class UserForm extends Component {
     const { step } = this.state;
     this.setState({
       step: step - 1
+    });
+  }
+
+  // go to username input page
+  usernameInputStep = () => {
+    this.setState({
+      step: 2
     });
   }
 
@@ -128,7 +136,12 @@ export class UserForm extends Component {
           />
         )
       case 4:
-        return <h1>UnrecognisedUsername</h1>
+        return (
+          <UnrecognisedUsername
+            usernameInputStep={this.usernameInputStep}
+            values={values}
+          />
+        )
     }
   }
 }
