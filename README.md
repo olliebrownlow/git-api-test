@@ -13,7 +13,7 @@ To use the program, follow the links and enter a valid Github username into the 
 For this I have used material-ui with just a few tweaks here and there.
 
 ### Code design
-![github](./public/diagram.jpg)
+![github](./public/codeflowdiagram.jpg)
 
 The interactive components are accessed through a wrapper component ("UserForm.js") which has a `step` counter which renders the correct 'page' depending on user input and button clicks.
 
