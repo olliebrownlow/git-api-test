@@ -13,7 +13,10 @@ export class EntryPoint extends Component {
   render() {
     return (
       <React.Fragment>
-        <AppBar style={{ background: '#ff3399', padding: '12px' }} position="static">
+        <AppBar
+          style={styles.appBar}
+          position="static"
+        >
           <Typography variant="h5">
             Discover someone's favourite programming language
           </Typography>
@@ -41,6 +44,10 @@ const styles = {
     color: '#ffffff',
     margin: 15,
     width: 150
+  },
+  appBar: {
+    background: '#ff3399',
+    padding: '12px'
   }
 }
 

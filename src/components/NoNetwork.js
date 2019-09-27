@@ -3,7 +3,7 @@ import AppBar from '@material-ui/core/AppBar'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography';
 
-export class UnrecognisedUsername extends Component {
+export class NoNetwork extends Component {
 
   tryAgain = e => {
     e.preventDefault();
@@ -19,12 +19,19 @@ export class UnrecognisedUsername extends Component {
           position="static"
         >
           <Typography variant="h5">
-            Unrecognised Github username
+            Server not found
           </Typography>
         </AppBar>
         <br/>
-        <h1>Cannot find the Github username</h1>
-        <h1>{values.username}</h1>
+        <h1>We're having problems carrying out your request:</h1>
+        <h2>Username: { values.username } </h2>
+        <h2>If this username is correct, here are other things you can do:</h2>
+        <div className="noNetworkList">
+          <ul>
+            <li>Try again later.</li>
+            <li>Check your network connection.</li>
+          </ul>
+        </div>
         <br/>
         <Button
           variant="contained"
@@ -52,4 +59,4 @@ const styles = {
   }
 }
 
-export default UnrecognisedUsername;
+export default NoNetwork;

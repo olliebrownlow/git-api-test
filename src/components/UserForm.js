@@ -4,6 +4,7 @@ import EntryPoint from './EntryPoint';
 import FormGithubUsername from './FormGithubUsername';
 import Results from './Results';
 import UnrecognisedUsername from './UnrecognisedUsername';
+import NoNetwork from './NoNetwork';
 
 const API_URL_START = 'https://api.github.com/users/';
 const API_URL_END = '/repos?per_page=100';
@@ -47,6 +48,13 @@ export class UserForm extends Component {
     });
   }
 
+  // go to no network page
+  noNetworkStep = () => {
+    this.setState({
+      step: 5
+    });
+  }
+
   // handle fields change
   handleChange = input => e => {
     this.setState({[input]: e.target.value});
@@ -60,8 +68,12 @@ export class UserForm extends Component {
       this.setStateVariables(data);
       this.nextStep();
     }).catch(error => {
-      this.unrecognisedUsernameStep();
       console.log('check login error', error);
+      if (!error.response) {
+        this.noNetworkStep();
+      } else {
+        this.unrecognisedUsernameStep();
+      }
     });
   }
 
@@ -138,6 +150,13 @@ export class UserForm extends Component {
       case 4:
         return (
           <UnrecognisedUsername
+            usernameInputStep={this.usernameInputStep}
+            values={values}
+          />
+        )
+      case 5:
+        return (
+          <NoNetwork
             usernameInputStep={this.usernameInputStep}
             values={values}
           />

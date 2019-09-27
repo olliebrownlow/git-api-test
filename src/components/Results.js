@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography';
@@ -17,7 +18,10 @@ export class Results extends Component {
     const { values } = this.props;
     return (
       <React.Fragment>
-        <AppBar style={{ background: '#ff3399', padding: '12px' }} position="static">
+        <AppBar
+          style={styles.appBar}
+          position="static"
+        >
           <Typography variant="h5">
             Results
           </Typography>
@@ -25,22 +29,21 @@ export class Results extends Component {
         <br/>
         <List>
           <ListItem style={{ textAlign: "center"}}>
-            <ListItemText
+            <StyledListItemText
               primary={ values.numberOfRepos }
               secondary="total number of repos"
             />
           </ListItem>
           <br/>
           <ListItem style={{  textAlign: "center"}}>
-            <ListItemText
+            <StyledListItemText
               primary={ values.favouriteLanguage }
               secondary="user's favourite language"
-
             />
           </ListItem>
           <br/>
           <ListItem style={{  textAlign: "center"}}>
-            <ListItemText
+            <StyledListItemText
               primary={ values.frequency }
               secondary={ "number of repos where the user's favourite language appears as the main language" }
             />
@@ -70,7 +73,17 @@ const styles = {
     marginLeft: 15,
     marginRight: 15,
     width: 250
+  },
+  appBar: {
+    background: '#ff3399',
+    padding: '12px'
   }
 }
+
+const StyledListItemText = withStyles({
+  primary: {
+    fontSize: 48
+  },
+})(ListItemText);
 
 export default Results;

@@ -3,19 +3,34 @@ import AppBar from '@material-ui/core/AppBar'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
 
 export class FormGithubUsername extends Component {
+  state = {
+    snackbaropen: false,
+    snackbarmsg: "Please enter a username"
+  }
 
   back = e => {
     e.preventDefault();
     this.props.prevStep();
   }
 
+  snackbarClose = e => {
+    this.setState({
+      snackbaropen: false
+    });
+  }
+
   render() {
     const { values, handleChange, getGithubData } = this.props;
     return (
       <React.Fragment>
-        <AppBar style={{ background: '#ff3399', padding: '12px' }} position="static">
+        <AppBar
+          style={styles.appBar}
+          position="static"
+        >
           <Typography variant="h5">
             Discover someone's favourite programming language
           </Typography>
@@ -30,6 +45,23 @@ export class FormGithubUsername extends Component {
           onChange={handleChange('username')}
           defaultValue={values.username}
         />
+        <Snackbar
+          anchorOrigin={{vertical: "top", horizontal: "center"}}
+          open={this.state.snackbaropen}
+          autoHideDuration={6000}
+          onClose={this.snackbarClose}
+          message={<span>{this.state.snackbarmsg}</span>}
+          action={[
+            <IconButton
+              key="close"
+              aria-label="close"
+              color="inherit"
+              onClick={this.snackbarClose}
+            >
+            x
+            </IconButton>
+          ]}
+        />
         <br/>
         <Button
           variant="contained"
@@ -41,7 +73,13 @@ export class FormGithubUsername extends Component {
         <Button
           variant="contained"
           style={styles.button}
-          onClick={() => { getGithubData(); }}
+          onClick={() => {
+            if (values.username !== "") {
+              getGithubData();
+            } else {
+              this.setState({ snackbaropen: true })
+            }
+          }}
         >
           Continue
         </Button>
@@ -65,6 +103,10 @@ const styles = {
     marginLeft: 15,
     marginRight: 15,
     width: 250
+  },
+  appBar: {
+    background: '#ff3399',
+    padding: '12px'
   }
 }
 
