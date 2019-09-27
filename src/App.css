@@ -29,3 +29,7 @@ li {
   margin-left: 40%;
   margin-right: 25%;
 }
+
+.MuiListItem-root.MuiListItem-gutters {
+  text-align: center;
+}

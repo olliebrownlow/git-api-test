@@ -28,21 +28,21 @@ export class Results extends Component {
         </AppBar>
         <br/>
         <List>
-          <ListItem style={{ textAlign: "center"}}>
+          <ListItem>
             <StyledListItemText
               primary={ values.numberOfRepos }
               secondary="total number of repos"
             />
           </ListItem>
           <br/>
-          <ListItem style={{  textAlign: "center"}}>
+          <ListItem>
             <StyledListItemText
               primary={ values.favouriteLanguage }
               secondary="user's favourite language"
             />
           </ListItem>
           <br/>
-          <ListItem style={{  textAlign: "center"}}>
+          <ListItem>
             <StyledListItemText
               primary={ values.frequency }
               secondary={ "number of repos where the user's favourite language appears as the main language" }
