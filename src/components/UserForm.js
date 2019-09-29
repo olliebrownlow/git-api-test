@@ -5,6 +5,7 @@ import FormGithubUsername from './FormGithubUsername';
 import Results from './Results';
 import UnrecognisedUsername from './UnrecognisedUsername';
 import NoNetwork from './NoNetwork';
+import githubUserData from '../logic/githubUserData';
 
 const API_URL_START = 'https://api.github.com/users/';
 const API_URL_END = '/repos?per_page=100';
@@ -78,44 +79,24 @@ export class UserForm extends Component {
   }
 
   setStateVariables = (data) => {
-    const language = this.calculateStateVariables(data)[0];
-    const frequency = this.calculateStateVariables(data)[1];
-    const totalRepos = this.calculateStateVariables(data)[2];
-    if (language && frequency && totalRepos) {
+    const info = new githubUserData(data);
+    const favLanguage = info.nameAndFrequency()[0];
+    const frequency = info.nameAndFrequency()[1];
+    const totalRepos = info.numOfRepos().length;
+    if (favLanguage && frequency && totalRepos) {
       this.setState({
-        favouriteLanguage: language.toUpperCase(),
+        favouriteLanguage: favLanguage.toUpperCase(),
         frequency: frequency,
         numberOfRepos: totalRepos
       });
     } else {
-      console.log("ohno!");
+      console.log("Oh no, not enough data in this request!");
       this.setState({
         favouriteLanguage: "insufficient data",
         frequency: "insufficient data",
         numberOfRepos: "insufficient data"
       });
     }
-  }
-
-  calculateStateVariables = (data) => {
-    const languagesArray = data.map((repo) => (
-      repo.language
-    ))
-    var frequency = 1;
-    var count = 0;
-    var language;
-    for (var i = 0; i < languagesArray.length; i++) {
-      for (var j = i; j < languagesArray.length; j++) {
-        if (languagesArray[i] === languagesArray[j])
-          count++;
-        if (frequency < count) {
-          frequency = count;
-          language = languagesArray[i];
-        }
-      }
-      count = 0;
-    }
-    return [language, frequency, languagesArray.length]
   }
 
   render() {

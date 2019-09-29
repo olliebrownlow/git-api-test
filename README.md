@@ -10,14 +10,18 @@ To use the program, follow the links and enter a valid Github username into the 
 
 ### Page design
 
-For this I have used material-ui with just a few tweaks here and there.
+For this I have used material-ui with styling tweaks here and there.
 
 ### Code design
 ![github](./public/codeflowdiagram.jpg)
 
 The interactive components are accessed through a wrapper component ("UserForm.js") which has a `step` counter which renders the correct 'page' depending on user input and button clicks.
 
-Requests to the [Github API](https://developer.github.com/v3/) are made using axios GET requests. On clicking "continue" after the user has inputted a Github username, the api request is made and the data received is processed in order to set three values to state. These values are for the totals number of repos, the most popular programming language and the number of repos that the user has with their favourite language as the main language. These values are displayed on the results page.
+Requests to the [Github API](https://developer.github.com/v3/) are made using axios GET requests. On clicking "continue" after the user has inputted a Github username (see [edge cases section](#edge-cases) for when user leaves the text field empty), the api request is made and the data received is processed in order to set three values to state. These values are for the totals number of repos, the most popular programming language and the number of repos that the user has with their favourite language as the main language.
+
+I considered this processing to be more like backend business logic so extracted it to it's own file in the `src/logic` folder.
+
+The three values are displayed on the results page.
 
 ### User stories
 
